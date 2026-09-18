@@ -1,0 +1,84 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark));
+
+:root {
+  --background: #f7f7f4;
+  --foreground: #151515;
+
+  --card: #ffffff;
+  --border: #deded8;
+  --muted: #686862;
+}
+
+.dark {
+  --background: #0b0c0d;
+  --foreground: #f5f5ef;
+
+  --card: #151719;
+  --border: #2a2d30;
+  --muted: #a5a7a3;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+::selection {
+  background: #facc15;
+  color: #000;
+}
+
+.nav-link {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    color 200ms ease,
+    transform 200ms ease;
+}
+
+.nav-link:hover {
+  color: var(--foreground);
+  transform: translateY(-1px);
+}
+
+.theme-button {
+  display: flex;
+  height: 42px;
+  width: 42px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--foreground);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
+}
+
+.theme-button:hover {
+  border-color: #facc15;
+  transform: translateY(-1px);
+}
+
+.section-placeholder {
+  display: flex;
+  min-height: 400px;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+}
