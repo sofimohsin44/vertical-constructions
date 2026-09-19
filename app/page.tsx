@@ -17,7 +17,14 @@ import {
 import { Crosshair } from "lucide-react";
 
 export default function Home() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return localStorage.getItem("vertical-theme") === "dark";
+  });
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [formStatus, setFormStatus] = useState<
@@ -30,8 +37,9 @@ export default function Home() {
     const savedTheme = localStorage.getItem("vertical-theme");
 
     if (savedTheme === "dark") {
-      setDark(true);
       document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
     }
   }, []);
 
@@ -169,7 +177,7 @@ export default function Home() {
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="theme-button md:hidden"
+              className="theme-button md:!hidden"
               aria-label="Open menu"
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
@@ -178,42 +186,62 @@ export default function Home() {
           </div>
         </nav>
 
-        {/* MOBILE MENU */}
-        {menuOpen && (
-          <div className="mx-4 mt-2 rounded-2xl border border-border bg-background p-5 shadow-xl md:hidden">
-            <div className="flex flex-col gap-5">
+{/* MOBILE MENU */}
+{menuOpen && (
+  <div className="fixed inset-0 z-[9999] min-h-screen bg-[#58584e] dark:bg-[#0b0c0d] md:hidden">
 
-              <a
-                href="#about"
-                onClick={() => setMenuOpen(false)}
-              >
-                About
-              </a>
+    {/* TOP BAR */}
+    <div className="flex items-center justify-end border-b border-[#0e0e0d] px-6 py-5 dark:border-[#2a2d30]">
 
-              <a
-                href="#services"
-                onClick={() => setMenuOpen(false)}
-              >
-                Services
-              </a>
+      <button
+        onClick={() => setMenuOpen(false)}
+        className="theme-button"
+        aria-label="Close menu"
+      >
+        <X size={20} />
+      </button>
 
-              <a
-                href="#projects"
-                onClick={() => setMenuOpen(false)}
-              >
-                Projects
-              </a>
+    </div>
 
-              <a
-                href="#contact"
-                onClick={() => setMenuOpen(false)}
-              >
-                Contact
-              </a>
+    {/* MENU LINKS */}
+    <nav className="flex min-h-[calc(100vh-86px)] flex-col items-center justify-center gap-10 bg-[#b4b42d] dark:bg-[#0b0c0d]">
 
-            </div>
-          </div>
-        )}
+      <a
+        href="#about"
+        onClick={() => setMenuOpen(false)}
+        className="text-3xl font-bold text-[#151515] dark:text-[#f5f5ef]"
+      >
+        About
+      </a>
+
+      <a
+        href="#services"
+        onClick={() => setMenuOpen(false)}
+        className="text-3xl font-bold text-[#151515] dark:text-[#f5f5ef]"
+      >
+        Services
+      </a>
+
+      <a
+        href="#projects"
+        onClick={() => setMenuOpen(false)}
+        className="text-3xl font-bold text-[#151515] dark:text-[#f5f5ef]"
+      >
+        Projects
+      </a>
+
+      <a
+        href="#contact"
+        onClick={() => setMenuOpen(false)}
+        className="text-3xl font-bold text-[#151515] dark:text-[#f5f5ef]"
+      >
+        Contact
+      </a>
+
+    </nav>
+
+  </div>
+)}
       </header>
 
       {/* HERO */}
@@ -393,7 +421,7 @@ export default function Home() {
                     </div>
 
                     <div className="mt-1 text-base font-bold text-foreground">
-                      Let's talk about your project.
+                     Let&apos;s talk about your project.
                     </div>
                   </div>
 
